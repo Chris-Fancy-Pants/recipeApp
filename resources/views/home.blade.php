@@ -7,7 +7,17 @@
             <div class="card">
                 <div class="card-header">Recipes</div>
                 <a href="new-recipe">Add Recipe</a>
+                <hr>
+                @foreach($recipes as $recipe)
                 
+                <br>
+
+                <a href="{{ url('recipe/edit/' . $recipe->id) }}">{{$recipe->name}}</a>
+
+                <br>
+ 
+                @endforeach
+
                 </div>
             </div>
         </div>

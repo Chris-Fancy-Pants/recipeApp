@@ -17,7 +17,7 @@ class RecipeController extends Controller
 
     public function create(Request $request){
 
-        $validatedData = $request->validate([
+        $recipeData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required|min:10',
             'serves' => 'numeric',
@@ -26,12 +26,12 @@ class RecipeController extends Controller
 
         ]);
 
-        $validatedData['created_by'] = Auth::user()->id;
+        $recipeData['created_by'] = Auth::user()->id;
 
 
         
 
-        $recipe = Recipe::create($validatedData);
+        $recipe = Recipe::create($recipeData);
         
         return redirect('recipe/edit/' . $recipe->id);
         //return redirect()->route('edit_recipe', ['id' => $recipe->id]);
@@ -50,5 +50,9 @@ class RecipeController extends Controller
 
     }
 
+
+    public function test() {
+        return "Test";
+    }
 
 }

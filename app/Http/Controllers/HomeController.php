@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $recipes = DB::table('recipes')->where('created_by', Auth::user()->id)->get();
+
+        //dd(Auth::user());
+        //dd($recipes);
+
+        return view('home', ['recipes' => $recipes]);
     }
 }
