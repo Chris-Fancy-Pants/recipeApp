@@ -52,7 +52,8 @@ class RecipeController extends Controller
             'description' => 'required|min:10',
             'serves' => 'numeric',
             'prep_time' => 'numeric',
-            'cook_time' => 'numeric'
+            'cook_time' => 'numeric',
+            'step.*.description' => 'required',
 
         ]);
         $recipe = Recipe::find($request->id);
@@ -141,7 +142,23 @@ class RecipeController extends Controller
 
     }
 
+    public function removeIngredient(Request $request) {
 
+       
+        $ingredientToDelete = Ingredient::destroy($request->id);
+        
+        return $ingredientToDelete;
+
+    }
+
+    public function removeStep(Request $request) {
+
+       
+        $stepToDelete = Step::destroy($request->id);
+        
+        return $stepToDelete;
+
+    }
 
 
 }

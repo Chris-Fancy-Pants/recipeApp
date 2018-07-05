@@ -8,9 +8,11 @@
             <div class="card">
 
                 <input type="hidden" name="id" value="{{$recipe->id}}">
-                @csrf
-                Name:<br>
-                <input type="text" name="name" value="{{$recipe->name}}"><br>
+                <input id="csrf_token" type="hidden" name="_token" value="{{ csrf_token() }}">
+                
+
+                <label for="name_field">Name</label>
+                <input style="border:none; border-bottom: 1px solid #ccc" type="text" name="name" value="{{$recipe->name}}" id="name_field"><br>
                 Description:<br>
                 <textarea name="description" id="" cols="30" rows="10">{{$recipe->description}}</textarea><br>
                 Serves:<br>
@@ -22,6 +24,15 @@
           </div>
 
           <br>
+          @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <div class="card">   
                 <div>Indredient List</div>
            
@@ -36,7 +47,7 @@
                         @foreach ($ingredients as $ingredient)
 
                         
-                            <div class="row ingredient-{{$ingredient->id}}">
+                            <div id="ingredient-container-{{$ingredient->id}}" class="row ingredient-{{$ingredient->id}}" style="padding: 10px;">
                                 <div class="col-md-1">
                                     <input type="number" name="ingredient[{{$count}}][qty]" value="{{$ingredient->qty}}" maxlength="4" size="4">
                                 </div>
@@ -52,8 +63,9 @@
                                     X
                                 </div>
                                 <input type="hidden" name="ingredient[{{$count}}][id]" value="{{$ingredient->id}}">
+                                
                             </div>
-                            <br>
+                            
                         
                             <?php $count += 1; ?>
 
@@ -105,17 +117,20 @@
                         @foreach ($steps as $step)
 
                         
-                            <div class="row">
-                                <div class="col-md-2">
-                                    {{$step->step_no}}.
+                            <div style="padding:10px" id="step-container-{{$step->id}}" class="row">
+                                <div class="col-md-1">
+                                    {{$step->step_no}}
                                 </div>
                                 
                                 <div class="col-md-10">
-                                    <input type="text" name="step[{{$step_count}}][description]" value="{{$step->description}}">
+                                    <input style="width: 100%;" type="text" name="step[{{$step_count}}][description]" value="{{$step->description}}">
+                                </div>
+                                <div class="col-md-1 btn btn-danger removeIngredient" onclick="removeStep({{$step->id}})">
+                                    X
                                 </div>
                                 <input type="hidden" name="step[{{$step_count}}][id]" value="{{$step->id}}">
                             </div>
-                            <br>
+                           
                         
                             <?php $step_count += 1; ?>
 

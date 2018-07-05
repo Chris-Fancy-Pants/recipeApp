@@ -23,3 +23,7 @@ Route::post('recipe/create', 'RecipeController@create');
 Route::post('recipe/update', 'RecipeController@update');
 Route::get('recipe/edit/{id}', 'RecipeController@edit');
 Route::get('recipe/test', 'RecipeController@test');
+
+
+Route::post('recipe/remove-ingredient', 'RecipeController@removeIngredient');
+Route::post('recipe/remove-step', 'RecipeController@removeStep');
