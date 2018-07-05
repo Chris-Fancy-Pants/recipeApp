@@ -10432,3 +10432,10 @@ body {
   background-color: chocolate;
 }
 
+.recipe-holder-show {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+}
+

@@ -6,16 +6,22 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Recipes</div>
-                <a href="new-recipe">Add Recipe</a>
-                <hr>
+                <a class="btn btn-primary" href="new-recipe">Add Recipe</a>
+                 <input id="csrf_token" type="hidden" name="_token" value="{{ csrf_token() }}">
                 @foreach($recipes as $recipe)
                 
-                <br>
+                <div id="recipe-holder-{{$recipe->id}}" class="recipe-holder-show row">
+                    <div class="col-md-8">
+                        <a href="{{ url('recipe/' . $recipe->id) }}">{{$recipe->name}}</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary" href="{{ url('recipe/edit/' . $recipe->id) }}">Edit</a>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn btn-danger" onclick="deleteRecipe({{$recipe->id}})">Delete</div>
+                    </div>
+                </div>
 
-                <a href="{{ url('recipe/edit/' . $recipe->id) }}">{{$recipe->name}}</a>
-
-                <br>
- 
                 @endforeach
 
                 </div>

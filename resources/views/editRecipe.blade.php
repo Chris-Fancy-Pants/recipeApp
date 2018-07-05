@@ -48,15 +48,28 @@
 
                         
                             <div id="ingredient-container-{{$ingredient->id}}" class="row ingredient-{{$ingredient->id}}" style="padding: 10px;">
-                                <div class="col-md-1">
-                                    <input type="number" name="ingredient[{{$count}}][qty]" value="{{$ingredient->qty}}" maxlength="4" size="4">
+                                <div class="col-md-2">
+                                   
+                                    <input style="width: 90%; text-align: center;" type="number" step="any" name="ingredient[{{$count}}][qty]" value="{{$ingredient->qty}}" maxlength="4" size="4">
+                                   
                                 </div>
                                 
                                 <div class="col-md-2">
-                                    <input type="text" name="ingredient[{{$count}}][unit]" value="{{$ingredient->unit}}">
+                                     <select style="width: 100%" name="ingredient[{{$count}}][unit]">
+                                    <option value="{{$ingredient->unit}}" selected>{{$ingredient->unit}}</option>
+                                    <option value="g">g</option>
+                                    <option value="kg">kg</option>
+                                    <option value="cup">cup</option>
+                                    <option value="tsp">tsp</option>
+                                    <option value="tbsp">tbsp</option>
+                                    <option value="ml">ml</option>
+                                    <option value="l">l</option>
+                                    <option value="clove">clove</option>
+                                
+                                    </select>
                                 </div>
                                 
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <input style="width: 100%" type="text" name="ingredient[{{$count}}][name]" value="{{$ingredient->name}}">
                                 </div>
                                 <div class="col-md-1 btn btn-danger removeIngredient" onclick="removeIngredient({{$ingredient->id}})">
@@ -86,7 +99,18 @@
                             </div>
                             
                             <div class="col-md-3">
-                                <input type="text" name="ingredient[0][unit]">
+                                <select name="ingredient[0][unit]">
+                                
+                                    <option value="g">g</option>
+                                    <option value="kg">kg</option>
+                                    <option value="cup">cup</option>
+                                    <option value="tsp">tsp</option>
+                                    <option value="tbsp">tbsp</option>
+                                    <option value="ml">ml</option>
+                                    <option value="l">l</option>
+                                    <option value="clove">clove</option>
+                                
+                                </select>
                             </div>
                             
                             <div class="col-md-6">
@@ -123,7 +147,7 @@
                                 </div>
                                 
                                 <div class="col-md-10">
-                                    <input style="width: 100%;" type="text" name="step[{{$step_count}}][description]" value="{{$step->description}}">
+                                <textarea style="width: 100%" type="text" name="step[{{$step_count}}][description]">{{$step->description}}</textarea>
                                 </div>
                                 <div class="col-md-1 btn btn-danger removeIngredient" onclick="removeStep({{$step->id}})">
                                     X
@@ -145,20 +169,25 @@
 
                 @else
                     <div id="newStepHolder">
-                        <div class="row">
-                            <div class="col-md-3">
+                    <div class="step">
+                        <div class="row" style="padding: 10px" id="step-container-0">
+                            <div class="col-md-1">
                                 1.
                             </div>
                             
-                            <div class="col-md-3">
-                                <input type="text" name="step[0][description]">
+                            <div class="col-md-10">
+                                <textarea style="width: 100%" type="text" name="step[0][description]">
+                                </textarea>
                             </div>
                             
-                           
+                           <div class="col-md-1 btn btn-danger removeIngredient">
+                                X
+                            </div>
                         </div>
                         <br>
                     </div>
-                    <div id="step_count_holder" style="display: none">0</div>
+                    </div>
+                    <div id="step_count_holder" style="display: none">1</div>
                 @endif
             
                 <div id="newStep" class="btn btn-primary" >

@@ -44,6 +44,17 @@ class RecipeController extends Controller
     }
 
 
+    public function show($id) {
+
+        $recipe = Recipe::find($id);
+        $ingredients = Ingredient::where('recipe_id', '=', $recipe->id)->get();
+        $steps = Step::where('recipe_id', '=', $recipe->id)->get();
+
+        return view('showRecipe', ['recipe' => $recipe, 'ingredients' => $ingredients, 'steps' => $steps]);
+
+    }
+
+
     public function update(Request $request) {
 
       
@@ -53,7 +64,6 @@ class RecipeController extends Controller
             'serves' => 'numeric',
             'prep_time' => 'numeric',
             'cook_time' => 'numeric',
-            'step.*.description' => 'required',
 
         ]);
         $recipe = Recipe::find($request->id);
@@ -61,6 +71,12 @@ class RecipeController extends Controller
         if($recipe->created_by != Auth::user()->id) {
             return "You do not have permission to edit this entry";
         }
+
+        $recipe->name = $recipeData['name'];
+        $recipe->description = $recipeData['description'];
+        $recipe->serves = $recipeData['serves'];
+        $recipe->prep_time = $recipeData['prep_time'];
+        $recipe->cook_time = $recipeData['cook_time'];
 
 
         $ingredientArray = $request->ingredient;
@@ -98,7 +114,7 @@ class RecipeController extends Controller
 
          foreach($stepsArray as $st) {
  
- 
+            if($st['description']) {
              if(isset($st['id'])) {                
                  
                  $step = Step::find($st['id']);
@@ -120,7 +136,9 @@ class RecipeController extends Controller
 
              }
              $step_count += 1;
-          }
+            }
+        }
+        $recipe->save();
 
 
         $ingredients = Ingredient::where('recipe_id', '=', $recipe->id)->get();
@@ -157,6 +175,13 @@ class RecipeController extends Controller
         $stepToDelete = Step::destroy($request->id);
         
         return $stepToDelete;
+
+    }
+
+    public function deleteRecipe(Request $request) {
+        $recipeToDelete = Recipe::destroy($request->id);
+        
+        return $recipeToDelete;
 
     }
 

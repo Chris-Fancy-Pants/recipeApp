@@ -11,19 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/new-recipe', 'RecipeController@index');
 Route::post('recipe/create', 'RecipeController@create');
 Route::post('recipe/update', 'RecipeController@update');
 Route::get('recipe/edit/{id}', 'RecipeController@edit');
-Route::get('recipe/test', 'RecipeController@test');
+Route::get('recipe/{id}', 'RecipeController@show');
 
 
+Route::post('recipe/delete-recipe', 'RecipeController@deleteRecipe');
 Route::post('recipe/remove-ingredient', 'RecipeController@removeIngredient');
 Route::post('recipe/remove-step', 'RecipeController@removeStep');
